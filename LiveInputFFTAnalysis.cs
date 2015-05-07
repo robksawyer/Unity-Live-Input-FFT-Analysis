@@ -69,8 +69,9 @@ public class FFT : MonoBehaviour
 		inputDevices = new string[Microphone.devices.Length];
 		deviceNum = Microphone.devices.Length - 1;
 
-		for (int i = 0; i < Microphone.devices.Length; i++)
+		for (int i = 0; i < Microphone.devices.Length; i++) {
 			inputDevices [i] = Microphone.devices [i].ToString ();
+		}
 
 		CurrentAudioInput = Microphone.devices [deviceNum].ToString ();
 
@@ -88,8 +89,9 @@ public class FFT : MonoBehaviour
 	#region Actions
 	private void Check ()
 	{
-		if (!doSound)
+		if (!doSound) {
 			return;
+		}
 
 		audioObj [index].player.audio.GetSpectrumData (freqData, 0, FFTWindow.Hamming);
 
@@ -103,16 +105,18 @@ public class FFT : MonoBehaviour
 		}
 
 		for (int i = 0; i < freqData.Length; i++) {
-			if (k > BANDS - 1)
+			if (k > BANDS - 1) {
 				break;
+			}
 
 			band [k] += freqData [i];
 			if (i > crossovers [k]) {
 				output [k] = Mathf.Abs (band [k] / lengths [k]);
 				k++;
 			}
-			if (i > crossovers [BANDS - 1] - 10)
+			if (i > crossovers [BANDS - 1] - 10) {
 				cutoff = true;
+			}
 		}
 	}
 
@@ -143,8 +147,9 @@ public class FFT : MonoBehaviour
 		audioObj [Mathf.Abs ((index % 2) - 1)].player.audio.Stop ();
 
 		index++;
-		if (index > 1)
+		if (index > 1) {
 			index = 0;
+		}
 
 
 	}
@@ -156,8 +161,9 @@ public class FFT : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.Equals)) {
 			deviceNum++;
-			if (deviceNum > Microphone.devices.Length - 1)
+			if (deviceNum > Microphone.devices.Length - 1) {
 				deviceNum = 0;
+			}
 			CurrentAudioInput = Microphone.devices [deviceNum].ToString ();
 		}
 	}
